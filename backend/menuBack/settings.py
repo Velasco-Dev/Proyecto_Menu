@@ -89,8 +89,8 @@ DATABASES = {
 
 # Configurar CORS si planeas conectar con frontend
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React
-    "http://127.0.0.1:3000",
+    "http://localhost:5157",  # React
+    "http://127.0.0.1:5157",
 ]
 
 
