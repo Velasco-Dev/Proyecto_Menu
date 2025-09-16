@@ -1,0 +1,86 @@
+[
+    {
+        "id": "tomate",
+        "name": "Tomate",
+        "icon": "🍅",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "pasta",
+        "name": "Pasta",
+        "icon": "🍝",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "yuca",
+        "name": "Yuca",
+        "icon": "🥔",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "papa",
+        "name": "Papa",
+        "icon": "🥔",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "pollo",
+        "name": "Pollo",
+        "icon": "🍗",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "carne",
+        "name": "Carne",
+        "icon": "🥩",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "pescado",
+        "name": "Pescado",
+        "icon": "🐟",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "arroz",
+        "name": "Arroz",
+        "icon": "🍚",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "frijoles",
+        "name": "Frijoles",
+        "icon": "🫘",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "queso",
+        "name": "Queso",
+        "icon": "🧀",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "aguacate",
+        "name": "Aguacate",
+        "icon": "🥑",
+        "rating": 5,
+        "selected": false
+    },
+    {
+        "id": "cebolla",
+        "name": "Cebolla",
+        "icon": "🧅",
+        "rating": 5,
+        "selected": false
+    }
+]
