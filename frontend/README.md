@@ -1,12 +1,56 @@
-# React + Vite
+# 🚀 ¿Cómo crear una app de React con Vite?
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este documento explica paso a paso cómo crear una aplicación utilizando **React** con **Vite**, usando **JavaScript**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✅ Requisitos previos
 
-## Expanding the ESLint configuration
+- Tener instalado **Node.js**  
+  👉 Recomendado: última versión estable desde [nodejs.org](https://nodejs.org/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🎯 Creación de la app
+
+👉 Documentación oficial: última versión estable desde [vitejs.dev/guide](https://vitejs.dev/guide/)
+
+```bash
+npm create vite@latest
+```
+
+- Primero escogemos el nombre del proyecto.
+- Seleccionamos **React** como framework.
+- Elegimos **JavaScript** o **TypeScript** según preferencia.
+- (Opcional) Configuramos ESLint y Prettier para mantener la calidad del código.
+- Instalamos las dependencias:
+  ```bash
+  npm install
+  ```
+
+---
+
+## 📁 Estructura y ejecución del proyecto
+
+Una vez creada la app, debes dirigirte a la carpeta generada (por ejemplo, `mi-app`):
+
+```bash
+cd mi-app
+```
+
+### ▶️ Para ejecutar la app:
+
+Finalmente tenemos el proyecto creado y ejecutamos el servidor de desarrollo:
+
+```bash
+npm run dev
+```
+
+El servidor estará disponible en [http://localhost:5173](http://localhost:5173).
+
+---
+
+## ✍️ Autor
+
+- Creado por Luis Martinez (luiiszv)
+- 📅 Fecha de creación: 15/09/2025
