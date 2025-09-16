@@ -66,4 +66,4 @@ El servidor estará disponible en [http://127.0.0.1:8000](http://127.0.0.1:8000)
 ## ✍️ Autor
 
 - Creado por Rubén Velasco (Velasco-Dev)
-- 📅 Fecha
+- 📅 Fecha de creación: 15/09/2025

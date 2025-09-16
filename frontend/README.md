@@ -53,4 +53,4 @@ El servidor estará disponible en [http://localhost:5173](http://localhost:5173)
 ## ✍️ Autor
 
 - Creado por Luis Martinez (luiiszv)
-- 📅 Fecha de
+- 📅 Fecha de creación: 15/09/2025
