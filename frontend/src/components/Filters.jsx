@@ -4,12 +4,20 @@ import ingredientsData from '../data/ingredientes.json' // Importa el JSON
 export const Filters = ({ ingredients, setIngredients }) => {
     // Usa useState para manejar los ingredientes
 
+    // Función para actualizar la puntuación en el backend -- Probar si sirve
+    const updateIngredientRating = async (id, puntuacion) => {
+    await fetch(`http://localhost:8000/api/ingredientes/${id}/`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ puntuacion })
+    });
+};
 
     // Ejemplo de función para manejar el cambio de rating
     const handleRatingChange = (id, newRating) => {
         setIngredients(ingredients =>
             ingredients.map(ing =>
-                ing.id === id ? { ...ing, rating: newRating } : ing
+                ing.id === id ? { ...ing, puntuacion: newRating } : ing
             )
         );
 
@@ -20,7 +28,7 @@ export const Filters = ({ ingredients, setIngredients }) => {
     const handleIngredientClick = (ingredient) => {
         setIngredients(ingredients =>
             ingredients.map(ing =>
-                ing.id === ingredient.id ? { ...ing, selected: !ing.selected } : ing
+                ing.id === ingredient.id ? { ...ing, seleccionado: !ing.seleccionado } : ing
             )
         );
 
@@ -41,9 +49,9 @@ export const Filters = ({ ingredients, setIngredients }) => {
                         onClick={() => handleIngredientClick(ingredient)}
                     >
                         <div className="text-center space-y-1 sm:space-y-2">
-                            <div className="text-2xl sm:text-3xl">{ingredient.icon}</div>
-                            <div className="text-xs sm:text-sm font-medium text-gray-900 leading-tight">{ingredient.name}</div>
-                            {ingredient.selected && (
+                            <div className="text-2xl sm:text-3xl">{ingredient.icono}</div>
+                            <div className="text-xs sm:text-sm font-medium text-gray-900 leading-tight">{ingredient.nombre}</div>
+                            {ingredient.seleccionado && (
                                 <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">
                                     ✓
                                 </span>
@@ -53,20 +61,20 @@ export const Filters = ({ ingredients, setIngredients }) => {
                 ))}
             </div>
 
-            {ingredients.filter((ing) => ing.selected).length > 0 && (
+            {ingredients.filter((ing) => ing.seleccionado).length > 0 && (
                 <div className="space-y-3 sm:space-y-4 pt-3 sm:pt-4 border-t border-gray-200">
                     <h3 className="text-sm font-medium text-gray-900">¿Cuánto te gustan estos ingredientes?</h3>
                     {ingredients
-                        .filter((ing) => ing.selected)
+                        .filter((ing) => ing.seleccionado)
                         .map((ingredient) => (
                             <div key={ingredient.id} className="space-y-2">
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm text-gray-600 flex items-center gap-2">
-                                        <span className="text-base">{ingredient.icon}</span>
-                                        <span className="truncate">{ingredient.name}</span>
+                                        <span className="text-base">{ingredient.icono}</span>
+                                        <span className="truncate">{ingredient.nombre}</span>
                                     </span>
                                     <span className="text-xs font-medium bg-gray-100 text-gray-800 px-2 py-1 rounded-full flex-shrink-0">
-                                        {ingredient.rating}/10
+                                        {ingredient.puntuacion}/10
                                     </span>
                                 </div>
                                 <div className="relative">
@@ -74,11 +82,11 @@ export const Filters = ({ ingredients, setIngredients }) => {
                                         type="range"
                                         min="1"
                                         max="10"
-                                        value={ingredient.rating}
+                                        value={ingredient.puntuacion}
                                         onChange={(e) => handleRatingChange(ingredient.id, Number.parseInt(e.target.value))}
                                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                                         style={{
-                                            background: `linear-gradient(to right, #ea580c 0%, #ea580c ${((ingredient.rating - 1) / 9) * 100}%, #e5e7eb ${((ingredient.rating - 1) / 9) * 100}%, #e5e7eb 100%)`,
+                                            background: `linear-gradient(to right, #ea580c 0%, #ea580c ${((ingredient.puntuacion - 1) / 9) * 100}%, #e5e7eb ${((ingredient.puntuacion - 1) / 9) * 100}%, #e5e7eb 100%)`,
                                         }}
                                     />
 
