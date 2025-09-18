@@ -1,0 +1,74 @@
+[
+    {
+        "nombre": "Tomate",
+        "icono": "🍅",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Pasta",
+        "icono": "🍝",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Yuca",
+        "icono": "🥔",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Papa",
+        "icono": "🥔",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Pollo",
+        "icono": "🍗",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Carne",
+        "icono": "🥩",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Pescado",
+        "icono": "🐟",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Arroz",
+        "icono": "🍚",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Frijoles",
+        "icono": "🫘",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Queso",
+        "icono": "🧀",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Aguacate",
+        "icono": "🥑",
+        "puntuacion": 5,
+        "seleccionado": false
+    },
+    {
+        "nombre": "Cebolla",
+        "icono": "🧅",
+        "puntuacion": 5,
+        "seleccionado": false
+    }
+]
