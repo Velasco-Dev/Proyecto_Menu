@@ -39,6 +39,7 @@ def platos_ordenados_view(request):
                 "puntuacion_total": puntuacion_total
             }
             lista.insertar_ordenado(plato_dict, puntuacion_total)
+    lista.recorrerAdelante()
     # Recorrer la lista y devolver como JSON
     platos_ordenados = []
     actual = lista.cabeza

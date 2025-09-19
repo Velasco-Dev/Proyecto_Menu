@@ -12,6 +12,7 @@ class ListaDoblementeEnlazada:
         self.tamanio = 0
 
     def insertar_ordenado(self, plato, puntuacion_total):
+        print(f'Insertando: {plato["nombre"]} con puntuación {puntuacion_total}')
         nuevo = Nodo(plato, puntuacion_total)
         if self.cabeza is None:
             self.cabeza = nuevo

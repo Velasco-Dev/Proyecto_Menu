@@ -11,13 +11,19 @@ export const MenuPage = () => {
     useEffect(() => {
         fetch(API_URL)
             .then(res => res.json())
-            .then(data => setPlatos(data.results ? data.results : data));
+            .then(data => {
+                console.log("Platos ordenados recibidos:", data.results ? data.results : data);
+                setPlatos(data.results ? data.results : data)
+            });
     }, []);
 
     const showFilters = () => {
         fetch(API_URL)
             .then(res => res.json())
-            .then(data => setPlatos(data.results ? data.results : data));
+            .then(data => {
+                console.log("Platos ordenados tras filtrar:", data.results ? data.results : data);
+                setPlatos(data.results ? data.results : data)
+            });
     }
 
     return (
