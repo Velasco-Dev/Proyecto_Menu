@@ -37,6 +37,7 @@ Dirígete al directorio del entorno virtual (`menuEnv`) y ejecuta:
   pip install djangorestframework
   pip install django-cors-headers
   ```
+---
 
 ### 3. Crear el proyecto Django
 
@@ -45,8 +46,6 @@ Dirígete al directorio del entorno virtual (`menuEnv`) y ejecuta:
   ```
 
 Por defecto se usa SQLite como base de datos. Puedes modificar la configuración en `menuBack/settings.py`.
-
----
 
 ### 3.1 Crear la app "platos"
 
