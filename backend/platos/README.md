@@ -15,27 +15,47 @@ Este documento explica paso a paso cómo crear una aplicación utilizando **Djan
 
 👉 Documentación oficial: última versión estable desde [docs.djangoproject.com](https://docs.djangoproject.com/es/4.2/)
 
-- Primero creamos el entorno virtual para aislar las dependencias del proyecto.
+### 1. Crear y activar el entorno virtual
+
+Desde la **carpeta raíz del proyecto**, ejecuta:
+
   ```bash
   python -m venv menuEnv
   ```
-- Activamos el entorno virtual según el sistema operativo:
+
+Para activar el entorno virtual, estando en la carpeta raíz, ejecuta (Según el sistema operativo):
+
   - **Windows:** `menuEnv\Scripts\activate`
   - **Linux/MacOS:** `source menuEnv/bin/activate`
-- Instalamos Django con el siguiente comando:
+
+### 2. Instalar dependencias
+
+Dirígete al directorio del entorno virtual (`menuEnv`) y ejecuta:
+
   ```bash
   pip install django
+  pip install djangorestframework
+  pip install django-cors-headers
   ```
-- Creamos el proyecto Django:
+
+### 3. Crear el proyecto Django
+
   ```bash
   django-admin startproject menuBack
   ```
-- Por defecto se usa SQLite como base de datos. Puedes modificar la configuración en `menuBack/settings.py`.
-- Realizamos las migraciones iniciales:
+
+Por defecto se usa SQLite como base de datos. Puedes modificar la configuración en `menuBack/settings.py`.
+
+### 4. Migraciones
+
+Dirígete al directorio `backend/` y ejecuta:
+
   ```bash
   python manage.py migrate
   ```
-- (Opcional) Creamos un superusuario para acceder al panel de administración:
+
+(Opcional) Para crear un superusuario:
+
   ```bash
   python manage.py createsuperuser
   ```
@@ -46,17 +66,17 @@ Este documento explica paso a paso cómo crear una aplicación utilizando **Djan
 
 Una vez creada la app, debes dirigirte a la carpeta generada (por ejemplo, `menuBack`):
 
-```bash
-cd menuBack
-```
+  ```bash
+  cd menuBack
+  ```
 
 ### ▶️ Para ejecutar la app:
 
 Finalmente tenemos el proyecto creado y ejecutamos el servidor de desarrollo:
 
-```bash
-python manage.py runserver
-```
+  ```bash
+  python manage.py runserver
+  ```
 
 El servidor estará disponible en [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
