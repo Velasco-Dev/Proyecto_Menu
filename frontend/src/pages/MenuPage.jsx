@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { data, useOutletContext } from "react-router-dom";
 
-const API_URL = "http://localhost:8000/api/platos/";
+const API_URL = "http://localhost:8000/api/platos-ordenados/";
 
 export const MenuPage = () => {
     const { selectedIngredients } = useOutletContext();
@@ -22,9 +22,11 @@ export const MenuPage = () => {
 
     }, []);
 
-    // const showFilters = () => {
-    //     console.log(selectedIngredients);
-    // }
+    const showFilters = () => {
+        fetch(API_URL)
+            .then(res => res.json())
+            .then(data => setPlatos(data.results ? data.results : data));
+    }
 
     return (
         <>
@@ -43,7 +45,7 @@ export const MenuPage = () => {
                         className="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200"
 
                         onClick={() => {
-                            // showFilters()
+                            showFilters()
                         }}
 
                     >

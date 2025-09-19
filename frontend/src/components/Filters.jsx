@@ -5,17 +5,18 @@ export const Filters = ({ ingredients, setIngredients }) => {
     // Usa useState para manejar los ingredientes
 
     // Función para actualizar la puntuación en el backend -- Probar si sirve
-    const updateIngredientRating = async (id, puntuacion) => {
+
+    const updateIngredientRating = async (id, puntuacion, seleccionado) => {
         await fetch(`http://localhost:8000/api/ingredientes/${id}/`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ puntuacion })
+            body: JSON.stringify({ puntuacion, seleccionado })
+
         });
     };
 
     // Ejemplo de función para manejar el cambio de rating
     const handleRatingChange = (id, newRating, seleccionado) => {
-        console.log(seleccionado);
 
         setIngredients(ingredients =>
             ingredients.map(ing =>
@@ -23,8 +24,9 @@ export const Filters = ({ ingredients, setIngredients }) => {
             )
         );
 
-        updateIngredientRating(id, newRating, seleccionado)
 
+
+        updateIngredientRating(id, newRating, !seleccionado);
 
     };
 
@@ -42,10 +44,7 @@ export const Filters = ({ ingredients, setIngredients }) => {
             )
         );
 
-        updateIngredientRating(id, puntuacion, seleccionado)
-
-
-
+        updateIngredientRating(ingredient.id, ingredient.puntuacion, !ingredient.seleccionado);
     };
 
     return (
