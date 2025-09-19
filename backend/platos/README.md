@@ -46,6 +46,20 @@ Dirígete al directorio del entorno virtual (`menuEnv`) y ejecuta:
 
 Por defecto se usa SQLite como base de datos. Puedes modificar la configuración en `menuBack/settings.py`.
 
+---
+
+### 3.1 Crear la app "platos"
+
+Dentro del directorio del proyecto (`menuBack`) o el directorio `backend/`, ejecuta:
+
+  ```bash
+  python manage.py startapp platos
+  ```
+
+Esto generará la carpeta y archivos necesarios para la app "platos".
+
+---
+
 ### 4. Migraciones
 
 Dirígete al directorio `backend/` y ejecuta:
