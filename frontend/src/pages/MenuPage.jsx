@@ -67,8 +67,18 @@ export const MenuPage = () => {
                                     </span>
                                 ))}
                             </div>
-                            <div className="text-right font-bold text-orange-600 text-lg">
-                                ${plato.precio}
+                            <div className="mt-4 flex justify-between items-center">
+                                <div className="text-right font-bold text-yellow-500 text-sm flex items-center">
+                                    {Array.from({ length: 5 }).map((_, i) => (
+                                        <span key={i}>
+                                            {i < Math.round((plato.puntuacion_total / 10) * 5) ? "⭐" : "☆"}
+                                        </span>
+                                    ))}
+                                    <span className="ml-2 text-sm text-gray-700">{plato.puntuacion_total}</span>
+                                </div>
+                                <div className="text-right font-bold text-orange-600 text-lg">
+                                    ${plato.precio}
+                                </div>
                             </div>
                         </div>
                     ))}

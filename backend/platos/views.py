@@ -23,7 +23,9 @@ def platos_ordenados_view(request):
             ing for ing in plato.ingredientes.all() if ing.seleccionado
         ]
         if ingredientes_seleccionados:  # Solo platos con ingredientes seleccionados
-            puntuacion_total = sum(ing.puntuacion for ing in ingredientes_seleccionados)
+            puntuacion_total = round(
+                                    sum(ing.puntuacion for ing in ingredientes_seleccionados) / len(ingredientes_seleccionados), 2
+                                )
             plato_dict = {
                 "id": plato.id,
                 "nombre": plato.nombre,

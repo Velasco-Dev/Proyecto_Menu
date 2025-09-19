@@ -20,10 +20,8 @@ export const Filters = ({ ingredients, setIngredients }) => {
                 ing.id === id ? { ...ing, puntuacion: newRating } : ing
             )
         );
-
-        console.log(id, newRating, seleccionado);
-
-        updateIngredientRating(id, newRating, !seleccionado);
+        // console.log(id, newRating, seleccionado);
+        updateIngredientRating(id, newRating);
     };
 
     // Ejemplo de función para seleccionar/deseleccionar ingrediente
