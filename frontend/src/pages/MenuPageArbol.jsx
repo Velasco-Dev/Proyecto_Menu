@@ -292,33 +292,33 @@ export const MenuPageArbol = () => {
             {/* Header Menu Marta SmartMeal */}
             <div className="text-center bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl p-6 shadow-lg">
                                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-green-800">
+                    <h1 className="text-3xl font-bold text-white">
                         🍽️ Menu Marta - SmartMeal
                     </h1>
-                    <div className="mt-2 text-sm text-gray-600">
-                        Sistema de recomendaciones inteligente
+                    <div className="mt-2 text-sm text-white">
+                        Sistema de recomendaciones Arbol
                     </div>
                 </div>
-                <p className="text-orange-100 mb-4">Tu asistente culinario inteligente personalizado</p>
+                <p className="text-orange-100 mb-4">Tu asistente</p>
                 
                 {/* Botón de información */}
-                <button
+                {/* <button
                     onClick={() => setMostrarInfo(!mostrarInfo)}
-                    className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg text-sm transition-all duration-200"
+                    className="bg-white bg-opacity-20 hover:bg-opacity-30 text-black px-4 py-2 rounded-lg text-sm transition-all duration-200"
                 >
                     {mostrarInfo ? '❌ Ocultar Info' : 'ℹ️ ¿Cómo funciona?'}
-                </button>
+                </button> */}
                 
                 {/* Panel de información */}
-                {mostrarInfo && (
+                {/* {mostrarInfo && (
                     <div className="mt-4 bg-white bg-opacity-10 rounded-lg p-4 text-left text-sm">
                         <h3 className="font-bold mb-2">🤖 Asistente SmartMeal vs 🍽️ Menú Tradicional</h3>
-                        <div className="grid md:grid-cols-2 gap-4 text-orange-100">
+                        <div className="grid md:grid-cols-2 gap-4 text-black">
                             <div>
-                                <strong>✨ Asistente SmartMeal (Actual):</strong>
+                                <strong>Arbol:</strong>
                                 <ul className="list-disc list-inside mt-1 space-y-1">
                                     <li>Te ayuda a elegir con preguntas personalizadas</li>
-                                    <li>120+ recomendaciones inteligentes</li>
+                                    <li>Recomendaciones inteligentes</li>
                                     <li>Sugerencias basadas en tus gustos</li>
                                     <li>Conecta con nuestro menú disponible</li>
                                 </ul>
@@ -337,7 +337,7 @@ export const MenuPageArbol = () => {
                             🎯 SmartMeal es perfecto cuando no sabes qué pedir
                         </p>
                     </div>
-                )}
+                )} */}
             </div>
 
             {/* Breadcrumb / Ruta */}

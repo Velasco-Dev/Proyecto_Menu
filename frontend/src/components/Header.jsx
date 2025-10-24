@@ -50,7 +50,7 @@ export function Header() {
               🤖 <span>Marta Arbol</span>
             </span>
             <div className="text-xs mt-1 opacity-90">
-              Guía inteligente paso a paso
+              Arbol paso a paso
             </div>
           </Link>
         </nav>
