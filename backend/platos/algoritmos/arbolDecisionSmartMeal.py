@@ -124,9 +124,9 @@ class ArbolDecisionSmartMeal:
         # Nodo raíz
         self.raiz = NodoArbol(
             'inicio', 
-            '¿Qué tipo de comida deseas preparar hoy?',
+            '¿Qué tipo de comida te gustaría disfrutar?',
             'decision',
-            'Bienvenido a SmartMeal - Tu asistente culinario inteligente',
+            'Bienvenido a SmartMeal Restaurante',
             '🍽️'
         )
         self.nodos['inicio'] = self.raiz
@@ -150,7 +150,7 @@ class ArbolDecisionSmartMeal:
         desayuno = NodoArbol(
             'desayuno',
             'Desayuno',
-            'opcion',
+            'decision',  # Cambio a decision para que muestre opciones
             'Comienza tu día con energía',
             '🥣'
         )
@@ -161,7 +161,7 @@ class ArbolDecisionSmartMeal:
         almuerzo = NodoArbol(
             'almuerzo',
             'Almuerzo', 
-            'opcion',
+            'decision',  # Cambio a decision para que muestre opciones
             'La comida principal del día',
             '🍛'
         )
@@ -172,7 +172,7 @@ class ArbolDecisionSmartMeal:
         cena = NodoArbol(
             'cena',
             'Cena',
-            'opcion', 
+            'decision',  # Cambio a decision para que muestre opciones
             'Termina tu día de manera perfecta',
             '🌙'
         )
@@ -184,22 +184,16 @@ class ArbolDecisionSmartMeal:
         
         desayuno = self.nodos['desayuno']
         
-        # Pregunta sabor desayuno
-        sabor_desayuno = NodoArbol(
-            'sabor_desayuno',
-            '¿Qué sabor prefieres para comenzar el día?',
-            'decision',
-            'Elige entre opciones dulces o saladas',
-            '☀️'
-        )
-        desayuno.agregar_hijo(sabor_desayuno)
-        self.nodos['sabor_desayuno'] = sabor_desayuno
+        # Modificar el nodo desayuno para que tenga la pregunta directamente
+        desayuno.titulo = '¿Qué tipo de desayuno prefieres?'
+        desayuno.descripcion = 'Elige entre opciones dulces o saladas'
+        desayuno.icono = '☀️'
         
-        # DESAYUNO DULCE
-        self._construir_desayuno_dulce(sabor_desayuno)
+        # DESAYUNO DULCE - Directamente como hijo del nodo desayuno
+        self._construir_desayuno_dulce(desayuno)
         
-        # DESAYUNO SALADO
-        self._construir_desayuno_salado(sabor_desayuno)
+        # DESAYUNO SALADO - Directamente como hijo del nodo desayuno
+        self._construir_desayuno_salado(desayuno)
     
     def _construir_desayuno_dulce(self, padre):
         """Construye las opciones de desayuno dulce."""
@@ -218,7 +212,7 @@ class ArbolDecisionSmartMeal:
         # Pregunta ingrediente base dulce
         base_dulce = NodoArbol(
             'base_dulce',
-            '¿Cuál será el ingrediente base?',
+            '¿Qué base prefieres?',
             'decision',
             'Selecciona tu base favorita',
             '🍵'
@@ -258,19 +252,19 @@ class ArbolDecisionSmartMeal:
             {
                 'id': 'avena_miel',
                 'titulo': 'Miel y canela 🍯',
-                'resultado': 'Avena con miel, canela y almendras',
+                'resultado': 'Avena con miel, canela y almendras caramelizadas',
                 'ingredientes': ['avena', 'miel', 'canela', 'almendras']
             },
             {
                 'id': 'avena_chocolate',
                 'titulo': 'Chocolate y banano 🍫🍌',
-                'resultado': 'Avena con cacao, banano y semillas de chía',
+                'resultado': 'Avena con cacao, banano y chispas de chocolate',
                 'ingredientes': ['avena', 'cacao', 'banano', 'semillas_chia']
             },
             {
                 'id': 'avena_manzana',
                 'titulo': 'Manzana verde y nueces 🍏🌰',
-                'resultado': 'Avena con manzana verde, nueces y canela suave',
+                'resultado': 'Avena con manzana verde, nueces y toque de canela',
                 'ingredientes': ['avena', 'manzana_verde', 'nueces', 'canela']
             }
         ]
@@ -320,13 +314,13 @@ class ArbolDecisionSmartMeal:
             {
                 'id': 'yogurt_tropical',
                 'titulo': 'Frutas tropicales 🍍🍊',
-                'resultado': 'Yogurt con mango, piña y avena tostada',
+                'resultado': 'Yogurt natural con mango, piña y granola crocante',
                 'ingredientes': ['yogurt_natural', 'mango', 'piña', 'avena_tostada']
             },
             {
                 'id': 'yogurt_rojos',
                 'titulo': 'Frutos rojos 🍓🍒',
-                'resultado': 'Yogurt con fresa, mora y granola artesanal',
+                'resultado': 'Yogurt con fresa, mora y miel artesanal',
                 'ingredientes': ['yogurt_natural', 'fresa', 'mora', 'granola']
             }
         ]
@@ -410,7 +404,7 @@ class ArbolDecisionSmartMeal:
         
         base_salado = NodoArbol(
             'base_salado',
-            '¿Qué ingrediente base usarás?',
+            '¿Qué proteína te gustaría incluir?',
             'decision',
             'Proteínas y sabores salados',
             '🍳'
@@ -576,21 +570,16 @@ class ArbolDecisionSmartMeal:
         
         almuerzo = self.nodos['almuerzo']
         
-        tipo_almuerzo = NodoArbol(
-            'tipo_almuerzo',
-            '¿Qué tipo de almuerzo deseas preparar?',
-            'decision',
-            'Tradicional o saludable',
-            '🍛'
-        )
-        almuerzo.agregar_hijo(tipo_almuerzo)
-        self.nodos['tipo_almuerzo'] = tipo_almuerzo
+        # Modificar el nodo almuerzo para que tenga la pregunta directamente
+        almuerzo.titulo = '¿Qué tipo de almuerzo prefieres?'
+        almuerzo.descripcion = 'Tradicional o saludable'
+        almuerzo.icono = '🍛'
         
-        # ALMUERZO TRADICIONAL
-        self._construir_almuerzo_tradicional(tipo_almuerzo)
+        # ALMUERZO TRADICIONAL - Directamente como hijo del nodo almuerzo
+        self._construir_almuerzo_tradicional(almuerzo)
         
-        # ALMUERZO SALUDABLE
-        self._construir_almuerzo_saludable(tipo_almuerzo)
+        # ALMUERZO SALUDABLE - Directamente como hijo del nodo almuerzo
+        self._construir_almuerzo_saludable(almuerzo)
     
     def _construir_almuerzo_tradicional(self, padre):
         """Construye las opciones de almuerzo tradicional."""
@@ -607,7 +596,7 @@ class ArbolDecisionSmartMeal:
         
         proteina_tradicional = NodoArbol(
             'proteina_tradicional',
-            '¿Cuál será tu proteína base?',
+            '¿Qué proteína deseas en tu plato?',
             'decision',
             'Proteínas tradicionales',
             '🍗'
@@ -762,7 +751,7 @@ class ArbolDecisionSmartMeal:
         
         saludable = NodoArbol(
             'almuerzo_saludable',
-            'Saludable / Natural',
+            'Saludable / Gourmet',
             'opcion',
             'Nutritivo y balanceado',
             '🥗'
@@ -772,7 +761,7 @@ class ArbolDecisionSmartMeal:
         
         ingredientes_saludables = NodoArbol(
             'ingredientes_saludables',
-            '¿Qué ingredientes usarás en un plato saludable?',
+            '¿Qué plato saludable prefieres?',
             'decision',
             'Combinaciones nutritivas',
             '🥬'
@@ -808,21 +797,16 @@ class ArbolDecisionSmartMeal:
         
         cena = self.nodos['cena']
         
-        tipo_cena = NodoArbol(
-            'tipo_cena',
-            '¿Qué tipo de cena prefieres preparar?',
-            'decision',
-            'Ligera o completa',
-            '🌙'
-        )
-        cena.agregar_hijo(tipo_cena)
-        self.nodos['tipo_cena'] = tipo_cena
+        # Modificar el nodo cena para que tenga la pregunta directamente
+        cena.titulo = '¿Qué tipo de cena te gustaría elegir?'
+        cena.descripcion = 'Ligera o completa'
+        cena.icono = '🌙'
         
-        # CENA LIGERA
-        self._construir_cena_ligera(tipo_cena)
+        # CENA LIGERA - Directamente como hijo del nodo cena
+        self._construir_cena_ligera(cena)
         
-        # CENA COMPLETA
-        self._construir_cena_completa(tipo_cena)
+        # CENA COMPLETA - Directamente como hijo del nodo cena
+        self._construir_cena_completa(cena)
     
     def _construir_cena_ligera(self, padre):
         """Construye las opciones de cena ligera."""
@@ -839,7 +823,7 @@ class ArbolDecisionSmartMeal:
         
         base_ligera = NodoArbol(
             'base_ligera',
-            '¿Qué ingredientes base quieres usar?',
+            '¿Qué prefieres para una opción ligera?',
             'decision',
             'Opciones ligeras',
             '🍃'
@@ -858,7 +842,7 @@ class ArbolDecisionSmartMeal:
         
         ensalada = NodoArbol(
             'ensalada_vegetales',
-            'Ensalada de vegetales',
+            'Ensalada fresca',
             'opcion',
             'Fresca y nutritiva',
             ''
@@ -898,7 +882,7 @@ class ArbolDecisionSmartMeal:
         
         sopa = NodoArbol(
             'sopa_natural',
-            'Sopa natural',
+            'Sopa casera',
             'opcion',
             'Reconfortante y nutritiva',
             ''
@@ -948,7 +932,7 @@ class ArbolDecisionSmartMeal:
         
         proteina_cena = NodoArbol(
             'proteina_cena',
-            '¿Qué proteína usarás en la cena completa?',
+            '¿Qué proteína prefieres para tu cena completa?',
             'decision',
             'Proteínas para la cena',
             '🍗'

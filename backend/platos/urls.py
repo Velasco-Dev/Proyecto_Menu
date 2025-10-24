@@ -8,7 +8,8 @@ from .views import (
     smartmeal_navegar,
     smartmeal_obtener_opciones,
     smartmeal_estructura_completa,
-    smartmeal_buscar_platos_por_ingredientes
+    smartmeal_buscar_platos_por_ingredientes,
+    smartmeal_health_check
 )
 
 router = DefaultRouter()
@@ -34,6 +35,9 @@ urlpatterns = [
     
     # Buscar platos reales por ingredientes del árbol
     path('smartmeal/buscar-platos/', smartmeal_buscar_platos_por_ingredientes, name='smartmeal-buscar-platos'),
+    
+    # Verificación de salud del sistema
+    path('smartmeal/health/', smartmeal_health_check, name='smartmeal-health'),
     
     # Estructura completa (solo para debugging)
     path('smartmeal/debug/estructura/', smartmeal_estructura_completa, name='smartmeal-debug'),
