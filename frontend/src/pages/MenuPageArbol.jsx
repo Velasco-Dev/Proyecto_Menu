@@ -401,7 +401,7 @@ export const MenuPageArbol = () => {
 
                             {/* Botones de acción */}
                             <div className="flex flex-col sm:flex-row gap-4">
-                                {/* <button
+                                <button
                                     onClick={buscarPlatosReales}
                                     disabled={buscandoPlatos}
                                     className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
@@ -416,7 +416,7 @@ export const MenuPageArbol = () => {
                                             🍽️ Ver Opciones Disponibles
                                         </>
                                     )}
-                                </button> */}
+                                </button>
                                 
                                 <button
                                     onClick={reiniciar}
@@ -443,20 +443,63 @@ export const MenuPageArbol = () => {
                                             </h3>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 {platosEncontrados.map(plato => (
-                                                    <div key={plato.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                                    <div key={plato.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow bg-white">
                                                         <div className="flex justify-between items-start mb-2">
-                                                            <h4 className="font-semibold text-lg">{plato.nombre}</h4>
-                                                            <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                                                            <div>
+                                                                <h4 className="font-semibold text-lg text-gray-800">{plato.nombre}</h4>
+                                                                <div className="flex items-center gap-2 text-xs text-gray-500">
+                                                                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                                                        {plato.categoria}
+                                                                    </span>
+                                                                    {plato.tipo && (
+                                                                        <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded">
+                                                                            {plato.tipo}
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-medium">
                                                                 {plato.porcentaje_coincidencia}% match
                                                             </span>
                                                         </div>
-                                                        <p className="text-gray-600 text-sm mb-3">{plato.descripcion}</p>
-                                                        <div className="flex justify-between items-center">
-                                                            <div className="flex items-center gap-2">
-                                                                <span className="text-yellow-500">⭐</span>
-                                                                <span className="text-sm">{plato.puntuacion}/10</span>
+                                                        
+                                                        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{plato.descripcion}</p>
+                                                        
+                                                        {plato.ingredientes_coincidentes && plato.ingredientes_coincidentes.length > 0 && (
+                                                            <div className="mb-3">
+                                                                <p className="text-xs text-gray-500 mb-1">Ingredientes que coinciden:</p>
+                                                                <div className="flex flex-wrap gap-1">
+                                                                    {plato.ingredientes_coincidentes.map((ing, index) => (
+                                                                        <span key={index} className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">
+                                                                            {ing}
+                                                                        </span>
+                                                                    ))}
+                                                                </div>
                                                             </div>
-                                                            <span className="font-bold text-orange-600">${plato.precio}</span>
+                                                        )}
+                                                        
+                                                        <div className="flex justify-between items-center text-sm">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className="flex items-center gap-1">
+                                                                    <span className="text-yellow-500">⭐</span>
+                                                                    <span>{plato.puntuacion}/5</span>
+                                                                </div>
+                                                                {plato.tiempo_preparacion && (
+                                                                    <div className="flex items-center gap-1 text-gray-500">
+                                                                        <span>⏱️</span>
+                                                                        <span>{plato.tiempo_preparacion}</span>
+                                                                    </div>
+                                                                )}
+                                                                {plato.calorias && (
+                                                                    <div className="flex items-center gap-1 text-gray-500">
+                                                                        <span>🔥</span>
+                                                                        <span>{plato.calorias} cal</span>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                            <span className="font-bold text-orange-600 text-lg">
+                                                                ${plato.precio?.toLocaleString()}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 ))}
