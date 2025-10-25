@@ -1,5 +1,5 @@
 """
-Árbol de Decisión para SmartMeal - Sistema de Recomendación de Comidas
+Árbol de Decisión para Marta - Sistema de Recomendación de Comidas
 ====================================================================
 
 Este archivo implementa un árbol de decisión que guía al usuario a través de 
@@ -126,7 +126,7 @@ class ArbolDecisionSmartMeal:
             'inicio', 
             '¿Qué tipo de comida te gustaría disfrutar?',
             'decision',
-            'Bienvenido a SmartMeal Restaurante',
+            'Bienvenido a Restaurante Marta',
             '🍽️'
         )
         self.nodos['inicio'] = self.raiz

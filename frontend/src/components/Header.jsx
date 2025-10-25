@@ -47,7 +47,7 @@ export function Header() {
             }`}
           >
             <span className="inline-flex items-center gap-2">
-              🤖 <span>Marta Arbol</span>
+              🤖 <span>Menú Arbol</span>
             </span>
             <div className="text-xs mt-1 opacity-90">
               Arbol paso a paso
