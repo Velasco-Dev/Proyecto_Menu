@@ -3,11 +3,19 @@ from .models import Plato, Ingrediente
 from .serializers import PlatoSerializer, IngredienteSerializer
 from platos.algoritmos.listaDoblementeEnlazada import ListaDoblementeEnlazada
 from platos.algoritmos.arbolDecisionSmartMeal import arbol_smart_meal
+from platos.algoritmos.grafoBusquedaReceta import build_graph_desde_db
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
+
+import os
+import json
+
+# Variable global para cachear el grafo (evita reconstruirlo cada vez)
+_grafo_cache = None
+_timestamp_cache = None
 
 class PlatoViewSet(viewsets.ModelViewSet):
     queryset = Plato.objects.all()
@@ -407,4 +415,308 @@ def smartmeal_health_check(request):
                 'timestamp': timezone.now().isoformat(),
             },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+    
+"""
+Vistas para búsqueda de recetas usando Grafo Bipartito Dirigido.
+"""
+
+def obtener_grafo():
+    """
+    Obtiene el grafo cacheado o lo construye si no existe.
+    El caché se invalida si el archivo JSON es más reciente.
+    """
+    global _grafo_cache, _timestamp_cache
+    
+    json_path = os.path.join(os.path.dirname(__file__), '..', 'platos_database.json')
+    
+    # Verificar si el archivo existe
+    if not os.path.exists(json_path):
+        raise FileNotFoundError(f"Base de datos de platos no encontrada en {json_path}")
+    
+    # Obtener timestamp del archivo
+    file_timestamp = os.path.getmtime(json_path)
+    
+    # Si el caché existe y el archivo no ha cambiado, usar el caché
+    if _grafo_cache is not None and _timestamp_cache == file_timestamp:
+        print("[INFO] Usando grafo cacheado")
+        return _grafo_cache
+    
+    # Cargar el archivo JSON
+    print("[INFO] Construyendo nuevo grafo desde JSON...")
+    with open(json_path, 'r', encoding='utf-8') as f:
+        platos_db = json.load(f)
+    
+    # Construir el grafo
+    grafo = build_graph_desde_db(platos_db)
+    
+    # Cachear el grafo
+    _grafo_cache = grafo
+    _timestamp_cache = file_timestamp
+    
+    return grafo
+
+
+@api_view(['POST'])
+def grafo_buscar_recetas(request):
+    """
+    Busca recetas basadas en ingredientes disponibles usando el Grafo Bipartito Dirigido.
+    
+    Body esperado:
+        {
+            "ingredientes": ["pollo", "arroz", "ajo"],
+            "umbral_casi_completa": 0.75
+        }
+    
+    Retorna:
+        {
+            "success": True,
+            "ingredientes_buscados": [...],
+            "resultados": {
+                "completas": [...],
+                "casi_completas": [...],
+                "incompletas": [...]
+            },
+            "estadisticas": {
+                "total_completas": 0,
+                "total_casi_completas": 0,
+                "total_incompletas": 0,
+                "total_recetas": 0
+            },
+            "timestamp": "..."
+        }
+    """
+    try:
+        # Validar entrada
+        ingredientes_buscados = request.data.get('ingredientes', [])
+        umbral = request.data.get('umbral_casi_completa', 0.75)
+        
+        if not isinstance(ingredientes_buscados, list) or not ingredientes_buscados:
+            return Response(
+                {
+                    'success': False,
+                    'message': 'Se requiere una lista no vacía de ingredientes.'
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Validar umbral
+        if not (0 <= umbral <= 1):
+            return Response(
+                {
+                    'success': False,
+                    'message': 'El umbral debe estar entre 0 y 1.'
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Obtener el grafo
+        grafo = obtener_grafo()
+        
+        # Buscar recetas
+        print(f"[INFO] Buscando recetas con ingredientes: {ingredientes_buscados}")
+        resultados = grafo.buscar_recetas_por_ingredientes(
+            ingredientes_buscados,
+            umbral_casi_completa=umbral
+        )
+        
+        # Calcular estadísticas
+        estadisticas = {
+            'total_completas': len(resultados['completas']),
+            'total_casi_completas': len(resultados['casi_completas']),
+            'total_incompletas': len(resultados['incompletas']),
+            'total_recetas': len(resultados['completas']) + len(resultados['casi_completas']) + len(resultados['incompletas'])
+        }
+        
+        return Response({
+            'success': True,
+            'message': f'Se han encontrado {estadisticas["total_recetas"]} recetas',
+            'ingredientes_buscados': ingredientes_buscados,
+            'umbral_utilizado': umbral,
+            'resultados': resultados,
+            'estadisticas': estadisticas,
+            'timestamp': timezone.now().isoformat()
+        })
+    
+    except FileNotFoundError as e:
+        return Response(
+            {
+                'success': False,
+                'message': f'Base de datos no encontrada: {str(e)}'
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+    
+    except json.JSONDecodeError as e:
+        return Response(
+            {
+                'success': False,
+                'message': f'Error al parsear JSON: {str(e)}'
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+    
+    except Exception as e:
+        print(f"[ERROR] {str(e)}")
+        return Response(
+            {
+                'success': False,
+                'message': f'Error interno: {str(e)}'
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['GET'])
+def grafo_estadisticas(request):
+    """
+    Retorna estadísticas del grafo (cantidad de ingredientes, recetas, aristas).
+    Útil para debugging y monitoreo.
+    
+    Retorna:
+        {
+            "success": True,
+            "estadisticas": {
+                "total_ingredientes": 0,
+                "total_recetas": 0,
+                "total_aristas": 0
+            },
+            "timestamp": "..."
+        }
+    """
+    try:
+        grafo = obtener_grafo()
+        
+        # Calcular total de aristas
+        total_aristas = sum(len(v) for v in grafo.adyacencia.values())
+        
+        estadisticas = {
+            'total_ingredientes': len(grafo.ingredientes),
+            'total_recetas': len(grafo.recetas),
+            'total_aristas': total_aristas
+        }
+        
+        return Response({
+            'success': True,
+            'estadisticas': estadisticas,
+            'timestamp': timezone.now().isoformat()
+        })
+    
+    except Exception as e:
+        return Response(
+            {
+                'success': False,
+                'message': f'Error: {str(e)}'
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['GET'])
+def grafo_ingredientes_disponibles(request):
+    """
+    Retorna la lista de todos los ingredientes disponibles en el grafo.
+    Útil para el frontend para mostrar qué ingredientes se pueden seleccionar.
+    
+    Retorna:
+        {
+            "success": True,
+            "ingredientes": ["pollo", "arroz", ...],
+            "total": 0,
+            "timestamp": "..."
+        }
+    """
+    try:
+        grafo = obtener_grafo()
+        
+        # Extraer nombres de ingredientes
+        ingredientes = sorted([ing.get_name() for ing in grafo.ingredientes])
+        
+        return Response({
+            'success': True,
+            'ingredientes': ingredientes,
+            'total': len(ingredientes),
+            'timestamp': timezone.now().isoformat()
+        })
+    
+    except Exception as e:
+        return Response(
+            {
+                'success': False,
+                'message': f'Error: {str(e)}'
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['GET'])
+def grafo_recetas_disponibles(request):
+    """
+    Retorna la lista de todas las recetas disponibles en el grafo.
+    
+    Retorna:
+        {
+            "success": True,
+            "recetas": ["Arroz con pollo", ...],
+            "total": 0,
+            "timestamp": "..."
+        }
+    """
+    try:
+        grafo = obtener_grafo()
+        
+        # Extraer nombres de recetas
+        recetas = sorted([receta.get_name() for receta in grafo.recetas])
+        
+        return Response({
+            'success': True,
+            'recetas': recetas,
+            'total': len(recetas),
+            'timestamp': timezone.now().isoformat()
+        })
+    
+    except Exception as e:
+        return Response(
+            {
+                'success': False,
+                'message': f'Error: {str(e)}'
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['GET'])
+def grafo_health_check(request):
+    """
+    Verifica que el grafo esté disponible y funcional.
+    
+    Retorna:
+        {
+            "success": True,
+            "message": "Grafo operativo",
+            "timestamp": "..."
+        }
+    """
+    try:
+        grafo = obtener_grafo()
+        
+        if grafo is None or len(grafo.ingredientes) == 0 or len(grafo.recetas) == 0:
+            return Response({
+                'success': False,
+                'message': 'Grafo no inicializado correctamente'
+            }, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        
+        return Response({
+            'success': True,
+            'message': 'Grafo operativo',
+            'timestamp': timezone.now().isoformat()
+        })
+    
+    except Exception as e:
+        return Response(
+            {
+                'success': False,
+                'message': f'Error: {str(e)}'
+            },
+            status=status.HTTP_503_SERVICE_UNAVAILABLE
         )

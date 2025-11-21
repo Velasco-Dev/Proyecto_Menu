@@ -11,7 +11,8 @@ const LayoutApp = () => {
     const [ingredients, setIngredients] = useState([]);
 
     // Verificar si estamos en SmartMeal
-    const isSmartMeal = location.pathname === '/smartmeal';
+    const isSmartMeal = location.pathname === '/menu-arbol';
+    const isReceta = location.pathname === '/menu-grafo';
 
     // Cargar ingredientes desde la API al montar el componente
     useEffect(() => {
@@ -29,6 +30,11 @@ const LayoutApp = () => {
                 
                 {/* Layout condicional basado en la ruta */}
                 {isSmartMeal ? (
+                    // Layout para SmartMeal - sin filtros, ancho completo
+                    <main className="w-full px-4 py-4">
+                        <Outlet context={{ selectedIngredients }} />
+                    </main>
+                ) : isReceta ? (
                     // Layout para SmartMeal - sin filtros, ancho completo
                     <main className="w-full px-4 py-4">
                         <Outlet context={{ selectedIngredients }} />

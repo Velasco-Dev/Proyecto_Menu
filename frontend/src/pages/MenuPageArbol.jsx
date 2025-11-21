@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const SMARTMEAL_API_BASE = "http://localhost:8000/api/smartmeal";
+const SMARTMEAL_API_BASE = "http://localhost:8000/api/menu-arbol";
 
 export const MenuPageArbol = () => {
     // Estados para manejar la navegación del árbol
