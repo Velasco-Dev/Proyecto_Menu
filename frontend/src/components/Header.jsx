@@ -4,7 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 export function Header() {
   const location = useLocation();
   
-  const isSmartMealActive = location.pathname === '/smartmeal';
+  const isSmartMealActive = location.pathname === '/menu-arbol';
+  const isRecetaActive = location.pathname === '/menu-grafo';
   const isTradicionalActive = location.pathname === '/' || location.pathname === '/menu-tradicional';
 
   return (
@@ -39,7 +40,7 @@ export function Header() {
           </Link>
           
           <Link
-            to="/smartmeal"
+            to="/menu-arbol"
             className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 text-center ${
               isSmartMealActive
                 ? 'bg-white text-orange-600 shadow-md'
@@ -51,6 +52,22 @@ export function Header() {
             </span>
             <div className="text-xs mt-1 opacity-90">
               Arbol paso a paso
+            </div>
+          </Link>
+
+          <Link
+            to="/menu-grafo"
+            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 text-center ${
+              isRecetaActive
+                ? 'bg-white text-orange-600 shadow-md'
+                : 'bg-orange-500 hover:bg-orange-400 text-white border border-orange-400'
+            }`}
+          >
+            <span className="inline-flex items-center gap-2">
+            🥗 <span>Menú Grafo</span>
+            </span>
+            <div className="text-xs mt-1 opacity-90">
+              Grafo de Recetas
             </div>
           </Link>
         </nav>

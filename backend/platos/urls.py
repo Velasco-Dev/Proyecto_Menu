@@ -9,7 +9,12 @@ from .views import (
     smartmeal_obtener_opciones,
     smartmeal_estructura_completa,
     smartmeal_buscar_platos_por_ingredientes,
-    smartmeal_health_check
+    smartmeal_health_check,
+    grafo_buscar_recetas,
+    grafo_estadisticas,
+    grafo_ingredientes_disponibles,
+    grafo_recetas_disponibles,
+    grafo_health_check
 )
 
 router = DefaultRouter()
@@ -25,20 +30,39 @@ urlpatterns = [
     # ========================================
     
     # Ruta inicial - obtiene la pregunta de inicio
-    path('smartmeal/', smartmeal_inicio, name='smartmeal-inicio'),
+    path('menu-arbol/', smartmeal_inicio, name='smartmeal-inicio'),
     
     # Navegación por ID de nodo
-    path('smartmeal/navegar/<str:id_nodo>/', smartmeal_navegar, name='smartmeal-navegar'),
+    path('menu-arbol/navegar/<str:id_nodo>/', smartmeal_navegar, name='smartmeal-navegar'),
     
     # Obtener solo opciones de un nodo
-    path('smartmeal/opciones/<str:id_nodo>/', smartmeal_obtener_opciones, name='smartmeal-opciones'),
+    path('menu-arbol/opciones/<str:id_nodo>/', smartmeal_obtener_opciones, name='smartmeal-opciones'),
     
     # Buscar platos reales por ingredientes del árbol
-    path('smartmeal/buscar-platos/', smartmeal_buscar_platos_por_ingredientes, name='smartmeal-buscar-platos'),
+    path('menu-arbol/buscar-platos/', smartmeal_buscar_platos_por_ingredientes, name='smartmeal-buscar-platos'),
     
     # Verificación de salud del sistema
-    path('smartmeal/health/', smartmeal_health_check, name='smartmeal-health'),
+    path('menu-arbol/health/', smartmeal_health_check, name='smartmeal-health'),
     
     # Estructura completa (solo para debugging)
-    path('smartmeal/debug/estructura/', smartmeal_estructura_completa, name='smartmeal-debug'),
+    path('menu-arbol/debug/estructura/', smartmeal_estructura_completa, name='smartmeal-debug'),
+
+    #"""
+    #URLs para las vistas del Grafo Bipartito Dirigido.
+    #"""
+
+    # Búsqueda principal de recetas por ingredientes
+    path('grafo/buscar/', grafo_buscar_recetas, name='grafo-buscar'),
+    
+    # Estadísticas del grafo
+    path('grafo/estadisticas/', grafo_estadisticas, name='grafo-estadisticas'),
+    
+    # Obtener ingredientes disponibles
+    path('grafo/ingredientes/', grafo_ingredientes_disponibles, name='grafo-ingredientes'),
+    
+    # Obtener recetas disponibles
+    path('grafo/recetas/', grafo_recetas_disponibles, name='grafo-recetas'),
+    
+    # Health check
+    path('grafo/health/', grafo_health_check, name='grafo-health'),
 ]
